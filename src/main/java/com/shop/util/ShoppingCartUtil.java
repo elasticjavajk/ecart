@@ -10,9 +10,14 @@ public class ShoppingCartUtil {
 	}
 	
 	public static void printBill(Cart cart) {
-		
+		printHeader();
 		cart.getItems().stream().forEach(item -> print(item));
 		print(cart);
+	}
+
+	private static void printHeader() {
+		System.out.println("=====================================\r\n"+"SKUId"+"  \b"+"Item"+"  \b"+"Qty  \b"+"Price"+"\r\n====================================="); 
+		
 	}
 
 	static void print(Object obj){

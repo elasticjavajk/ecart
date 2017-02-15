@@ -1,11 +1,13 @@
 package com.shop.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import com.shop.exception.CreateCartException;
 import com.shop.exception.ShoppingCartException;
 import com.shop.model.Cart;
 import com.shop.model.Item;
+import com.shop.model.SKU;
 
 /**
  * This class manages Cart Creation - collating item quantities, adding Items to cart, updating Items with details
@@ -42,13 +45,22 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public Cart prepareCart(String... args) throws ShoppingCartException {
 		LOG.info("BEGIN - CartServiceImpl.prepareCart..");
-
+		List<String> itemList = new ArrayList<>();
 		try{
 			if(args == null)
 				throw new IllegalArgumentException("Invalid arguments Exception, args cannot be Null");
+			
+			for (String pickedItem : args) {
+				itemList.add(WordUtils.capitalize(pickedItem));
+				if(!Arrays.stream(SKU.values()).anyMatch(e -> e.name().equalsIgnoreCase(pickedItem)))
+					throw new IllegalArgumentException("Invalid arguments Exception, Item doesn't exist - "+pickedItem);
+				  
+			}
+			
+			
 
 			List<Item> items = itemsCatalogue;
-			Map<String, Long> pickedItems = collateItems(args);
+			Map<String, Long> pickedItems = collateItems(itemList.toArray(new String[]{}));
 
 			addQtyForItems(items, pickedItems);
 			LOG.info("END - CartServiceImpl.prepareCart..");

@@ -2,6 +2,7 @@ package com.shop.service;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -111,7 +112,7 @@ public class CartBillingServiceImpl implements CartBillingService {
 	private void straightDiscount(Item item) throws CartBillingException{
 		if(!item.getPromotions().isEmpty()){
 			double priceFraction = ((double)(item.getPromotions().get(0).getDiscountPercent()))/(double)(100);
-			item.setItemDiscountAmount(new BigDecimal((priceFraction)*(item.getUnitPrice().doubleValue())*(item.getQty()), MathContext.DECIMAL64));
+			item.setItemDiscountAmount(BigDecimal.valueOf((priceFraction)*(item.getUnitPrice().doubleValue())*(item.getQty())).setScale(2, RoundingMode.HALF_UP));
 			
 		}
 
@@ -132,9 +133,10 @@ public class CartBillingServiceImpl implements CartBillingService {
 					.collect(Collectors.toList()).get(0);
 			int discountEligibleQty = (int)(dependentItem.getQty() / discItem.getPromotions().get(0).getConstraints().getMinQty());
 			int discountApplicableQty = (int) ((discountEligibleQty <= discItem.getQty()) ? discountEligibleQty : discItem.getQty());
+			
+			double priceFraction = ((double)(discItem.getPromotions().get(0).getDiscountPercent()))/(double)(100);
+			discItem.setItemDiscountAmount(BigDecimal.valueOf((priceFraction)*(discItem.getUnitPrice().doubleValue())*(discountApplicableQty)).setScale(2, RoundingMode.HALF_UP));
 
-			discItem.setItemDiscountAmount(new BigDecimal(discountApplicableQty).multiply((discItem.getUnitPrice().multiply((new BigDecimal(discItem.getPromotions().get(0).getDiscountPercent())
-					.divide(new BigDecimal(100), 2))))));
 
 		}
 
