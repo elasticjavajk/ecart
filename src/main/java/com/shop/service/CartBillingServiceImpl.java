@@ -1,14 +1,13 @@
 package com.shop.service;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.shop.exception.CartBillingException;
+import com.shop.exception.CartBillingException; 
 import com.shop.exception.ShoppingCartException;
 import com.shop.model.Cart;
 import com.shop.model.Item;

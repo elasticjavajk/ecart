@@ -6,7 +6,7 @@ import com.shop.model.Item;
 public class ShoppingCartUtil {
 	
 	public static boolean isNull(Object obj) {
-	    return obj == null;
+	    return obj == null; 
 	}
 	
 	public static void printBill(Cart cart) {
