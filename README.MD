@@ -2,7 +2,7 @@
 
 To create an app for ShoppingCart Billing Engine, which would accept a list of Items and prepare the Cart, Apply the promotions associated dynamically and generate the bill and print it in console.
 
-{script}
+{src}
 ::Should support the following Scenarios:
 
 Write a program in Java (JDK 8 / Maven) and associated unit tests that
@@ -48,7 +48,7 @@ applied.
 
 The code should be well structured, commented, have error handling
 and be tested.
-{script}
+{src}
 
 
 #Technology:#
@@ -68,7 +68,7 @@ The technology stack used to implement this application are as below
 - CheckOut the project from github
 - Run the cmd in console 'mvn clean install' to build and package the jar
 - On successfull execution of the above step, the jar file should be available in target folder as 'ecart-1.0.jar'
-- Run the jar from the target folder by using cmd 'java -jar ecart-1.0.jar Apples Apples Milk Bread Soup Soup> cartoutput.txt '
+- Run the jar from the target folder by using cmd ' java -jar ecart-1.0.jar Apples Apples Milk Bread Soup Soup > cartoutput.txt '
 
 On successfully completing the execution, the output file will have the list of log statements along with the generated bill.
 
